@@ -118,18 +118,21 @@ namespace PumoxTBD.Controllers
             //prubuję dodać nowych Employee - musi być nadany Emplyee.CompanyID przed zapisaniem!!!
             //może być problem - zapisuje Company, i jednocześnie Employee, w momencie tego zapisu?
             //co prowadzi do problemu z kluczem obcym?
-            Employee em = new Employee();
-            foreach (Employee e in ieE)
+            if (ieE != null && ieE.Count() > 0)
             {
-                em.CompanyId = id;
-                em.FirstName = e.FirstName;
-                em.LastName = e.LastName;
-                em.DateOfBirth = e.DateOfBirth;
-                em.JobTitle = e.JobTitle;
-                db.Employees.Add(em);
-                //ponieważ mamy powiązanie m-y Company a Employee - nie możemy wymuszać podwójnego
-                //EntityState.Modified wystarcza, i tak wymusza odświeżenie całego EF (chyba:)
-                //db.Entry(em).State = EntityState.Modified;
+                foreach (Employee e in ieE)
+                {
+                    Employee em = new Employee();
+                    em.CompanyId = id;
+                    em.FirstName = e.FirstName;
+                    em.LastName = e.LastName;
+                    em.DateOfBirth = e.DateOfBirth;
+                    em.JobTitle = e.JobTitle;
+                    db.Employees.Add(em);
+                    //ponieważ mamy powiązanie m-y Company a Employee - nie możemy wymuszać podwójnego
+                    //EntityState.Modified wystarcza, i tak wymusza odświeżenie całego EF (chyba:)
+                    //db.Entry(em).State = EntityState.Modified;
+                }
             }
 
 
