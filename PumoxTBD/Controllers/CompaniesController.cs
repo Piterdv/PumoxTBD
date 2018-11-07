@@ -81,7 +81,6 @@ namespace PumoxTBD.Controllers
 
         //-----------UPDATE---------OK:)
 
-        // PUT: api/Employees/5
         // PUT: /companies/upc/123
         [ActionName("upc")]
         [ResponseType(typeof(void))]
@@ -100,7 +99,7 @@ namespace PumoxTBD.Controllers
             }
 
             //Faza I
-            //dodaję Company - wycynając jednocześnie Employee
+            //dodaję Company - wycinając jednocześnie Employee
             //w przeciwnym wypadku następuje dublowanie z zapisaniem w kluczach obcych
             IEnumerable<Employee> ieE = company.Employees;
             company.Employees = null;
@@ -110,8 +109,10 @@ namespace PumoxTBD.Controllers
                 return BadRequest($"3. Ther's no Id! ({id}|{company.Id})");
             }
 
+            //modyfikuję db!
             db.Entry(company).State = EntityState.Modified;
-
+            //sprawdź to!!!
+            //db.Entry(company.Employees) = EntityState.Added;
             //--1 faza OK
 
             //Faza II
@@ -226,7 +227,6 @@ namespace PumoxTBD.Controllers
 
         //    return Ok();
         //} 
-        #endregion
 
         //// POST: api/Companies
         ////POST: /companies/create
@@ -245,7 +245,7 @@ namespace PumoxTBD.Controllers
         //    return CreatedAtRoute("DefaultApi", new { id = company.Id }, company);
         //}
         //{"Name":"Hakki","EstablishmentYear":2010,"Employees"} - OK, idzie:)
-
+        #endregion
 
         //!!!Działa z automatu + new employee!!!!
         //POST: /companies/create
